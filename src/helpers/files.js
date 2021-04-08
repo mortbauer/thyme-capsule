@@ -102,6 +102,7 @@ export async function cleanupFiles(type: string, userId: string) {
 }
 
 export async function saveFile(type: string, userId: string, content: string) {
+  console.log('saveFile',userId)
   const fileEntry = await File.create({
     type,
     UserId: userId,
@@ -113,5 +114,11 @@ export async function saveFile(type: string, userId: string, content: string) {
     // silently fail
   }
 
-  return write(fileEntry.id, content);
+  let res;
+  try{
+   await write(fileEntry.id, content);
+  } catch (e){
+    console.log('failed writing with',e)
+  }
+  return res
 }

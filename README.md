@@ -40,3 +40,14 @@ MAILGUN_DOMAIN=mg.usethyme.com
 MAILGUN_API_KEY=secret-key
 SENTRY_DSN=sentry-dns
 ```
+
+### Create encryption key
+
+```
+python -c 'import secrets,sys; sys.stdout.write(secrets.token_urlsafe(24))' | xsel -ib
+```
+
+## Run
+```
+docker run --rm -it -v $PWD/.env:/app/.env -v /var/run/postgresql:/var/run/postgresql -v $PWD/src:/app/src -v $PWD/database.json:/app/database.json -v $PWD/sequelizerc:/app/.sequelizerc -v $PWD/.babelrc:/app/.babelrc -p 5000:5000 -v $PWD/tmp:/app/tmp thyme-capsule
+```

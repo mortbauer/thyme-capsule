@@ -6,9 +6,15 @@ const connectionUrl = process.env.ENV === 'test'
   ? 'sqlite::memory:'
   : process.env.DATABASE_URL || '';
 
-const sequelize = new Sequelize(connectionUrl, {
+//const sequelize = new Sequelize(connectionUrl, {
+const sequelize = new Sequelize('thyme','thyme','any', {
+  host: '/var/run/postgresql',
+  dialect: 'postgres',
   logging: process.env.ENV === 'development' ? console.log : () => {}, // eslint-disable-line
   operatorsAliases: false,
+  dialectOptions: {
+    ssl: false
+  }
 });
 
 export const User = sequelize.define('User', {
