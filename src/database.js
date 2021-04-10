@@ -2,20 +2,9 @@
 
 import Sequelize from 'sequelize';
 
-const connectionUrl = process.env.ENV === 'test'
-  ? 'sqlite::memory:'
-  : process.env.DATABASE_URL || '';
+const connectionObj = require('./database.json')
 
-//const sequelize = new Sequelize(connectionUrl, {
-const sequelize = new Sequelize('thyme','thyme','any', {
-  host: '/var/run/postgresql',
-  dialect: 'postgres',
-  logging: process.env.ENV === 'development' ? console.log : () => {}, // eslint-disable-line
-  operatorsAliases: false,
-  dialectOptions: {
-    ssl: false
-  }
-});
+const sequelize = new Sequelize(connectionObj[process.env.NODE_ENV]);
 
 export const User = sequelize.define('User', {
   id: {
